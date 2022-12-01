@@ -2,15 +2,24 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCIPYGBWJr4mG6H8-mFHKIhOSBkhzLHpfA",
-    authDomain: "react-mui-144a1.firebaseapp.com",
-    projectId: "react-mui-144a1",
-    storageBucket: "react-mui-144a1.appspot.com",
-    messagingSenderId: "1099324031237",
-    appId: "1:1099324031237:web:7131a3cb81dbe41232376c",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+export const authPromise = () =>
+    new Promise((resolve, reject) => {
+        const unsubscribe = getAuth().onAuthStateChanged((user) => {
+            console.log("desde firebase.js", user);
+            unsubscribe();
+            resolve(user);
+        }, reject);
+    });
 
 export const auth = getAuth(app);
