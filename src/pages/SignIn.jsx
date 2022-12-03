@@ -18,7 +18,7 @@ import { useUserContext } from "../context/UserContext";
 const theme = createTheme();
 
 export default function SignIn() {
-    const { login } = useUserContext();
+    const { login, loading } = useUserContext();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -31,14 +31,16 @@ export default function SignIn() {
 
         login(data.get("email"), data.get("password"))
             .then((userCredential) => {
-                // console.log(userCredential);
-                // setUser(userCredential.user);
                 navigate("/dashboard");
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <ThemeProvider theme={theme}>

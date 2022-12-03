@@ -15,11 +15,14 @@ const app = initializeApp(firebaseConfig);
 
 export const authPromise = () =>
     new Promise((resolve, reject) => {
-        const unsubscribe = getAuth().onAuthStateChanged((user) => {
-            console.log("desde firebase.js", user);
-            unsubscribe();
-            resolve(user);
-        }, reject);
+        const unsubscribe = getAuth().onAuthStateChanged(
+            (user) => {
+                resolve(user);
+            },
+            (e) => reject(e)
+        );
+
+        unsubscribe();
     });
 
 export const auth = getAuth(app);

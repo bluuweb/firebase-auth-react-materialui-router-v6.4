@@ -26,10 +26,6 @@ export const router = createBrowserRouter([
                         index: true,
                         element: <Dashboard />,
                     },
-                    // {
-                    //     path: "/dashboard/products",
-                    //     element: <Products />,
-                    // },
                 ],
             },
         ],
